@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "resources",
+  "info": {
+    "singularName": "resource",
+    "pluralName": "resources",
+    "displayName": "Resource"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "Download"
+    },
+    "downloadUrl": {
+      "type": "string",
+      "required": true
+    },
+    "tags": {
+      "type": "json"
+    }
+  }
+}
