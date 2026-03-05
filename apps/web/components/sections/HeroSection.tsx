@@ -1,25 +1,51 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function HeroSection() {
+type Cta = {
+  label?: string;
+  href?: string;
+};
+
+type HeroData = {
+  eyebrow?: string;
+  heading?: string;
+  subheading?: string;
+  primaryCta?: Cta;
+  secondaryCta?: Cta;
+};
+
+type Props = {
+  data?: HeroData;
+};
+
+export default function HeroSection({ data }: Props) {
+  const eyebrow = data?.eyebrow || "Zebrand 2.0";
+  const heading = data?.heading || "Premium marketing websites that convert.";
+  const subheading =
+    data?.subheading ||
+    "A world-class front-end with a clean CMS structure. Built for speed, clarity, and consistent design across every page.";
+
+  const primaryLabel = data?.primaryCta?.label || "Explore services";
+  const primaryHref = data?.primaryCta?.href || "/services";
+
+  const secondaryLabel = data?.secondaryCta?.label || "Why Zebrand";
+  const secondaryHref = data?.secondaryCta?.href || "/about";
+
   return (
     <section className="z-hero">
       <div className="z-container">
         <div className="z-hero-grid">
           <div>
-            <p className="z-kicker">Zebrand 2.0</p>
-            <h1 className="z-h1">Premium marketing websites that convert.</h1>
-            <p className="z-lead">
-              A world-class front-end with a clean CMS structure. Built for speed, clarity, and consistent design
-              across every page.
-            </p>
+            <p className="z-kicker">{eyebrow}</p>
+            <h1 className="z-h1">{heading}</h1>
+            <p className="z-lead">{subheading}</p>
 
             <div className="z-hero-actions">
-              <Link className="z-btn" href="/services">
-                Explore services
+              <Link className="z-btn z-btn-primary" href={primaryHref}>
+                {primaryLabel}
               </Link>
-              <Link className="z-btn z-btn-ghost" href="/about">
-                Why Zebrand
+              <Link className="z-btn z-btn-ghost" href={secondaryHref}>
+                {secondaryLabel}
               </Link>
             </div>
 
