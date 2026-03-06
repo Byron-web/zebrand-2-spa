@@ -1,4 +1,5 @@
 import HeroSection from "@/components/sections/HeroSection";
+import ProblemsSolutionSection from "@/components/sections/ProblemsSolutionSection";
 import ServicesGridSection from "@/components/sections/ServicesGridSection";
 import ProcessStepsSection from "@/components/sections/ProcessStepsSection";
 
@@ -28,6 +29,23 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function asString(value: unknown): string | undefined {
   return typeof value === "string" ? value : undefined;
+}
+
+function asStringArray(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+
+  const cleaned: string[] = [];
+
+  for (const entry of value) {
+    if (typeof entry !== "string") continue;
+
+    const trimmed = entry.trim();
+    if (!trimmed) continue;
+
+    cleaned.push(trimmed);
+  }
+
+  return cleaned.length > 0 ? cleaned : undefined;
 }
 
 function asCta(value: unknown): Cta | undefined {
@@ -102,6 +120,19 @@ export default function SectionRenderer({ sections }: { sections: unknown[] }) {
               />
             );
 
+          case "problemssolution":
+            return (
+              <ProblemsSolutionSection
+                key={index}
+                heading={asString(r.heading)}
+                subheading={asString(r.subheading)}
+                problemsTitle={asString(r.leftTitle)}
+                solutionTitle={asString(r.rightTitle)}
+                problems={asStringArray(r.leftItems)}
+                solutions={asStringArray(r.rightItems)}
+              />
+            );
+
           case "servicesgrid": {
             const heading = asString(r.title) ?? asString(r.heading);
             const subheading = asString(r.subtitle) ?? asString(r.subheading);
@@ -131,9 +162,6 @@ export default function SectionRenderer({ sections }: { sections: unknown[] }) {
               />
             );
           }
-
-          case "problemssolution":
-            return null;
 
           default:
             return null;
